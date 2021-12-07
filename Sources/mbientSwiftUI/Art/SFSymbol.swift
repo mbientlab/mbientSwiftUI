@@ -37,6 +37,7 @@ public enum SFSymbol: String {
     case useMetaboot = "cross.case"
     case search = "magnifyingglass"
     case shortcutMenu = "list.dash"
+    case icloud = "icloud"
 
     case settings = "gearshape.fill"
     case delete = "trash"
@@ -93,6 +94,7 @@ public extension SFSymbol {
             case .useMetaboot: return "MetaBoot Rescue"
             case .search: return "Search"
             case .shortcutMenu: return "Table of Contents"
+            case .icloud: return "iCloud"
 
             case .settings: return "Options"
             case .delete: return "Delete"
