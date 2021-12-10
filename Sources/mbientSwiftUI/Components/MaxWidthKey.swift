@@ -43,3 +43,26 @@ public struct DetermineMaxWidth<K: MaxWidthKey>: ViewModifier {
         )
     }
 }
+
+public extension View {
+    func reportWidth(to width: Binding<CGFloat>) -> some View {
+        modifier(DetermineWidth(width))
+    }
+}
+
+public struct DetermineWidth: ViewModifier {
+    @Binding var width: CGFloat
+
+    public init(_ width: Binding<CGFloat>) {
+        _width = width
+    }
+
+    public func body(content: Content) -> some View {
+        content.background(
+            GeometryReader { proxy in
+                Color.clear
+                    .onChange(of: proxy.size.width) { width = $0; print($0) }
+            }
+        )
+    }
+}
