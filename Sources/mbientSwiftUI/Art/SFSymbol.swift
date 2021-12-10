@@ -23,6 +23,8 @@ public enum SFSymbol: String {
     case ambientLight = "rays"
     case hygrometer = "drop"
     case i2c = "fiberchannel"
+    case color = "camera.filters"
+    case proximity = "circle.dashed"
 
     case steps = "figure.walk"
     case refresh = "arrow.clockwise"
@@ -47,10 +49,16 @@ public enum SFSymbol: String {
     case start = "arrow.backward.to.line"
     case end = "arrow.forward.to.line"
 
+    case stream = "dot.radiowaves.right"
+    case log = "externaldrive"
+
     case back = "arrow.backward"
     case moreMenu = "ellipsis.circle.fill"
     case group = "circle.hexagonpath"
     case flashlight = "flashlight.on.fill"
+
+    case checkFilled = "checkmark.circle.fill"
+    case error = "exclamationmark.triangle.fill"
 }
 
 public extension SFSymbol {
@@ -81,6 +89,8 @@ public extension SFSymbol {
             case .ambientLight: return "Ambient Light"
             case .hygrometer: return "Hygrometer Water Vapor"
             case .i2c: return "I2C"
+            case .color: return "Color"
+            case .proximity: return "Proximity"
 
             case .refresh: return "Refresh Arrow"
             case .solidCircle: return "Circle"
@@ -103,10 +113,16 @@ public extension SFSymbol {
             case .start: return "Go to Start"
             case .end: return "Go to End"
 
+            case .stream: return "Stream"
+            case .log: return "Log"
+
             case .back: return "Back"
             case .moreMenu: return "Menu"
             case .group: return "Group"
             case .flashlight: return "Search"
+
+            case .checkFilled: return "Done"
+            case .error: return "Error"
         }
     }
 }
