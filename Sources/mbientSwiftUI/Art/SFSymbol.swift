@@ -23,8 +23,6 @@ public enum SFSymbol: String {
     case ambientLight = "rays"
     case hygrometer = "drop"
     case i2c = "fiberchannel"
-    case color = "camera.filters"
-    case proximity = "circle.dashed"
 
     case steps = "figure.walk"
     case refresh = "arrow.clockwise"
@@ -89,8 +87,6 @@ public extension SFSymbol {
             case .ambientLight: return "Ambient Light"
             case .hygrometer: return "Hygrometer Water Vapor"
             case .i2c: return "I2C"
-            case .color: return "Color"
-            case .proximity: return "Proximity"
 
             case .refresh: return "Refresh Arrow"
             case .solidCircle: return "Circle"
