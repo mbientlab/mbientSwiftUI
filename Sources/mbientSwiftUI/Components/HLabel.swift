@@ -6,7 +6,7 @@ import SwiftUI
 public struct HLabel<Content: View>: View {
 
     public init(_ subtitle: String,
-         secondary: Color = .secondary,
+         secondary: Color = .mySecondary,
          align toSubtitleWidth: CGFloat? = nil,
          spacing: CGFloat = 8,
          _ view: @escaping () -> Content) {
@@ -19,7 +19,7 @@ public struct HLabel<Content: View>: View {
 
     public init(_ subtitle: String,
                 item: String,
-                secondary: Color = .secondary,
+                secondary: Color = .mySecondary,
                 align toSubtitleWidth: CGFloat? = nil,
                 spacing: CGFloat = 8
     ) where Content == Text {

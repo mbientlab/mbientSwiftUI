@@ -61,7 +61,7 @@ public struct DetermineWidth: ViewModifier {
         content.background(
             GeometryReader { proxy in
                 Color.clear
-                    .onChange(of: proxy.size.width) { width = $0; print($0) }
+                    .onChange(of: proxy.size.width) { width = $0 }
             }
         )
     }

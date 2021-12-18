@@ -1,3 +1,3 @@
 # mbientSwiftUI
 
-A description of this package.
+Resources for MetaWear-related SwiftUI interfaces.
