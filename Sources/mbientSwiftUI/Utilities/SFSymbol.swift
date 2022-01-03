@@ -38,6 +38,7 @@ public enum SFSymbol: String {
     case search = "magnifyingglass"
     case shortcutMenu = "list.dash"
     case icloud = "icloud"
+    case icloudSaved = "checkmark.icloud"
 
     case settings = "gearshape.fill"
     case delete = "trash"
@@ -54,6 +55,7 @@ public enum SFSymbol: String {
     case moreMenu = "ellipsis.circle.fill"
     case group = "circle.hexagonpath"
     case flashlight = "flashlight.on.fill"
+    case add = "plus"
 
     case checkFilled = "checkmark.circle.fill"
     case error = "exclamationmark.triangle.fill"
@@ -101,6 +103,7 @@ public extension SFSymbol {
             case .search: return "Search"
             case .shortcutMenu: return "Table of Contents"
             case .icloud: return "iCloud"
+            case .icloudSaved: return "Saved to iCloud"
 
             case .settings: return "Options"
             case .delete: return "Delete"
@@ -116,6 +119,7 @@ public extension SFSymbol {
             case .moreMenu: return "Menu"
             case .group: return "Group"
             case .flashlight: return "Search"
+            case .add: return "New"
 
             case .checkFilled: return "Done"
             case .error: return "Error"
