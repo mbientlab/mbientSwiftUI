@@ -5,9 +5,12 @@ import SwiftUI
 public struct MiniMenuButton<Content: View>: View {
 
     private let content: () -> Content
+    public var hoverColor: Color
+    @State private var isHovered = false
 
-    public init(@ViewBuilder _ menu: @escaping () -> Content) {
+    public init(hoverColor: Color = .mySecondary, @ViewBuilder _ menu: @escaping () -> Content) {
         self.content = menu
+        self.hoverColor = hoverColor
     }
 
 #if os(macOS)
@@ -43,6 +46,7 @@ public struct MiniMenuButton<Content: View>: View {
     private var label: some View {
         SFSymbol.moreMenu.image()
             .font(.headline)
-            .foregroundColor(.mySecondary)
+            .foregroundColor(isHovered ? hoverColor : .mySecondary)
+            .whenHovered { isHovered = $0 }
     }
 }
