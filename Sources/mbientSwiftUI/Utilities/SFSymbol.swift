@@ -59,6 +59,8 @@ public enum SFSymbol: String {
 
     case checkFilled = "checkmark.circle.fill"
     case error = "exclamationmark.triangle.fill"
+
+    case swift = "swift"
 }
 
 public extension SFSymbol {
@@ -123,6 +125,7 @@ public extension SFSymbol {
 
             case .checkFilled: return "Done"
             case .error: return "Error"
+            case .swift: return "Swift"
         }
     }
 }

@@ -13,7 +13,7 @@ public enum SignalLevel: Int, Identifiable, Comparable {
     public static let dots: [Self] = [.oneBar, .twoBars, .threeBars, .fourBars, .fiveBars]
     public static let maxBars: Int = 5
     public static let maxBarsCG: CGFloat = 5
-    public static let noBarsRSSI = -80.0
+    public static let noBarsRSSI = -100.0
 
     public init(rssi: Double) {
         switch rssi {

@@ -4,7 +4,9 @@ import SwiftUI
 
 public struct CrossPlatformMenu<L: Listable>: View {
 
-    public init(selected: Binding<L>, options: [L], labelFont: Font? = nil) {
+    public init(selected: Binding<L>,
+                options: [L],
+                labelFont: Font? = nil) {
         _selected = selected
         self.options = options
         self.labelFont = labelFont

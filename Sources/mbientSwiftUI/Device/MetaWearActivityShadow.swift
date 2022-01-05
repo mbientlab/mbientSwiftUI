@@ -35,6 +35,7 @@ public struct MetaWearShadow: View {
         self.height = height
     }
 
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.isHovered) private var isHovering
     @Environment(\.isDropTarget) private var isDropping
     private var width: CGFloat
@@ -42,7 +43,7 @@ public struct MetaWearShadow: View {
 
     public var body: some View {
         MetaWearShape.Hoverable(width: width, height: height)
-            .foregroundColor(.black)
+            .foregroundColor(.black.opacity(colorScheme == .light ? 0.5 : 1))
             .blur(radius: 16)
             .scaleEffect(1.1, anchor: .center)
             .opacity(isDropping || isHovering ? 0.3 : 0)

@@ -60,9 +60,20 @@ public extension EnvironmentValues {
         get { return self[DragProviderEVK.self] }
         set { self[DragProviderEVK.self] = newValue }
     }
+
+    /// Background color
+    var reverseOutColor: Color {
+        get { return self[ReverseOutColorEVK.self] }
+        set { self[ReverseOutColorEVK.self] = newValue }
+    }
 }
 
 // MARK: - Keys
+
+private struct ReverseOutColorEVK: EnvironmentKey {
+    public static let defaultValue: Color = .defaultSystemBackground
+}
+
 
 private struct NamespaceEVK: EnvironmentKey {
     public static let defaultValue: Namespace.ID? = nil

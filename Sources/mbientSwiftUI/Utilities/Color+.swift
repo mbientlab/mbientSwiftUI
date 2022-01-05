@@ -14,4 +14,13 @@ public extension Color {
     static let myFailure = Color("failure")
     static let mySuccess = Color("success")
     static let myHighlight = Color("highlight")
+    static let myMint = Color("mint")
+    static let myHeadline = Color("headline")
+
+#if os(macOS)
+    static let defaultSystemBackground = Color(.textBackgroundColor)
+#else
+    static let defaultSystemBackground = Color(.systemBackground)
+#endif
+
 }
