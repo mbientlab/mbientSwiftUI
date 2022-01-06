@@ -1,8 +1,10 @@
 // Copyright 2021 MbientLab Inc. All rights reserved. See LICENSE.MD.
 
-#if os(macOS)
+
 import Foundation
+#if os(macOS)
 import AppKit
+#endif
 import SwiftUI
 import Combine
 
@@ -28,7 +30,7 @@ public struct ResigningTextField: View {
         macTextField
 #elseif os(iOS)
         iOSTextField
-            .onAppear { base = placeholderText }
+            .onAppear { text = placeholderText }
 #endif
     }
 #if os(macOS)
@@ -51,19 +53,25 @@ public struct ResigningTextField: View {
 }
 
 public struct TextFieldConfig {
-    
+
     public var textColor: Color = .primary
     public var font: Font
     public let size: CGFloat
+#if os(macOS)
     public var weight: NSFont.Weight = .medium
     public var design: NSFontDescriptor.SystemDesign = .rounded
+    #else
+    public var weight: UIFont.Weight = .medium
+    public var design: UIFontDescriptor.SystemDesign = .rounded
+    #endif
     public var lineBreakMode: NSLineBreakMode = .byTruncatingMiddle
     public var alignment: NSTextAlignment = .left
 
     public static func largeDeviceStyle() -> Self {
-        self.init(font: .system(.title), size: 22)
+        self.init(font: Font.system(.title), size: 22)
     }
 
+#if os(macOS)
     public init(textColor: Color = .primary, font: Font, size: CGFloat, weight: NSFont.Weight = .medium, design: NSFontDescriptor.SystemDesign = .rounded, lineBreakMode: NSLineBreakMode = .byTruncatingMiddle, alignment: NSTextAlignment = .left) {
         self.textColor = textColor
         self.font = font
@@ -73,10 +81,22 @@ public struct TextFieldConfig {
         self.lineBreakMode = lineBreakMode
         self.alignment = alignment
     }
+#else
+    public init(textColor: Color = .primary, font: Font, size: CGFloat, weight: UIFont.Weight = .medium, design: UIFontDescriptor.SystemDesign = .rounded, lineBreakMode: NSLineBreakMode = .byTruncatingMiddle, alignment: NSTextAlignment = .left) {
+        self.textColor = textColor
+        self.font = font
+        self.size = size
+        self.weight = weight
+        self.design = design
+        self.lineBreakMode = lineBreakMode
+        self.alignment = alignment
+    }
+#endif
 }
 
 // MARK: - Components
 
+#if os(macOS)
 public struct SingleLineTextField: NSViewControllerRepresentable {
 
     public var initialText: String
