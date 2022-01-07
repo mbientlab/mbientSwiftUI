@@ -66,6 +66,14 @@ public extension EnvironmentValues {
         get { return self[ReverseOutColorEVK.self] }
         set { self[ReverseOutColorEVK.self] = newValue }
     }
+
+    #if os(iOS)
+    /// Is the iOS device in a portrait orientation
+    var isPortrait: Bool {
+        get { return self[IsPortraitEVK.self] }
+        set { self[IsPortraitEVK.self] = newValue }
+    }
+    #endif
 }
 
 // MARK: - Keys
@@ -111,3 +119,38 @@ private struct DropOutcomeEVK: EnvironmentKey {
     public static let defaultValue: DraggableMetaWear.DropOutcome = .noDrop
 }
 
+#if os(iOS)
+private struct IsPortraitEVK: EnvironmentKey {
+    public static let defaultValue: Bool = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.isPortrait ?? true
+}
+
+
+extension View {
+    public func trackOrientation() -> some View {
+        modifier(IsPortrait())
+    }
+}
+
+struct IsPortrait: ViewModifier {
+
+    func body(content: Content) -> some View {
+        Modified(content: content)
+    }
+
+    struct Modified: View {
+
+        @State private var isPortrait = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.isPortrait ?? true
+
+        let content: Content
+
+        var body: some View {
+            content
+                .environment(\.isPortrait, isPortrait)
+                .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                    guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+                    self.isPortrait = scene.interfaceOrientation.isPortrait
+                }
+        }
+    }
+}
+#endif

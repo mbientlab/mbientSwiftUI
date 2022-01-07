@@ -17,29 +17,17 @@ struct MatchedGeometryColorView: ViewModifier {
         var content: Content
         var color: Color
 
-        #if os(iOS)
-        @Environment(\.verticalSizeClass) private var vRotation
-        #endif
-
-        private var id: Int {
-            #if os(macOS)
-            color.hashValue
-            #elseif os(iOS)
-            color.hashValue / (vRotation?.hashValue ?? 0)
-            #endif
-        }
-
         var body: some View {
             content
                 .background(
                     color
                         .edgesIgnoringSafeArea(.all)
                         .matchedGeometryEffect(
-                            id: id,
+                            id: color,
                             in: namespace!,
-                            properties: .frame,
+                            properties: .size,
                             anchor: .center,
-                            isSource: idiom.is_Mac ? true : false
+                            isSource: true
                         )
                 )
         }

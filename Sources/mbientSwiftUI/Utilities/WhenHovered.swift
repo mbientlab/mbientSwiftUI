@@ -8,7 +8,7 @@ public extension View {
         #if os(macOS)
         modifier(MouseInsideModifier(mouseIsInside))
         #else
-        self
+        onHover(perform: mouseIsInside)
         #endif
     }
 }
