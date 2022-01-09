@@ -119,6 +119,10 @@ private struct DropOutcomeEVK: EnvironmentKey {
     public static let defaultValue: DraggableMetaWear.DropOutcome = .noDrop
 }
 
+private struct IsCompactEVK: EnvironmentKey {
+    public static let defaultValue: Bool = idiom == .iPhone ? true : false
+}
+
 #if os(iOS)
 private struct IsPortraitEVK: EnvironmentKey {
     public static let defaultValue: Bool = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.isPortrait ?? true

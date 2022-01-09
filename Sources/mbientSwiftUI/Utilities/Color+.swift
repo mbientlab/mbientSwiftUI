@@ -16,6 +16,8 @@ public extension Color {
     static let myHighlight = Color("highlight")
     static let myMint = Color("mint")
     static let myHeadline = Color("headline")
+    static let myVignette = Color("vignette")
+    static let myPrimaryTinted = Color("primaryTinted")
 
 #if os(macOS)
     static let defaultSystemBackground = Color(.textBackgroundColor)
