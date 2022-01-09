@@ -288,7 +288,7 @@ extension Font.TextStyle: Comparable {
 #endif
 
 #if os(iOS)
-    public var guidelineWeight: CGFloat {
+    public var guidelineWeight: Font.Weight {
         switch self {
             case .headline: return .semibold
             default: return .regular
