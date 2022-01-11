@@ -45,7 +45,7 @@ public struct MiniMenuButton<Content: View>: View {
 
     private var label: some View {
         SFSymbol.moreMenu.image()
-            .font(.headline)
+            .adaptiveFont(.systemHeadline)
             .foregroundColor(isHovered ? hoverColor : .mySecondary)
             .whenHovered { isHovered = $0 }
     }

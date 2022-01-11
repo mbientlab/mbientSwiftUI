@@ -1,11 +1,9 @@
 // Copyright 2021 MbientLab Inc. All rights reserved. See LICENSE.MD.
 
-
-import Foundation
+import SwiftUI
 #if os(macOS)
 import AppKit
 #endif
-import SwiftUI
 import Combine
 
 public struct ResigningTextField: View {
@@ -25,16 +23,8 @@ public struct ResigningTextField: View {
         self.onCommit = onCommit
     }
 
+#if os(macOS)
     public var body: some View {
-#if os(macOS)
-        macTextField
-#elseif os(iOS)
-        iOSTextField
-            .onAppear { text = placeholderText }
-#endif
-    }
-#if os(macOS)
-    private var macTextField: some View {
         SingleLineTextField(initialText: initialText,
                             placeholderText: placeholderText,
                             config: config,
@@ -42,61 +32,42 @@ public struct ResigningTextField: View {
                             onCancel: { }
         )
             .alignmentGuide(.firstTextBaseline) { $0[.firstTextBaseline] + 1 }
-            .frame(height: config.size * 1.25, alignment: .leading)
+            .frame(height: config.font.size * 1.25, alignment: .leading)
+    }
+
+#elseif os(iOS)
+    public var body: some View {
+        TextField(placeholderText, text: $text) { _ in } onCommit: { onCommit(text) }
+        .adaptiveFont(.collectionSectionTitle)
+        .onAppear { text = placeholderText }
     }
 #endif
-
-    private var iOSTextField: some View {
-        TextField(placeholderText, text: $text) { _ in } onCommit: { onCommit(text) }
-        .font(.title2)
-    }
 }
 
-public struct TextFieldConfig {
+// MARK: - MacOS Styled Text Field
 
+/// Configures an NS/UITextField subclass
+public struct TextFieldConfig {
     public var textColor: Color = .primary
-    public var font: Font
-    public let size: CGFloat
-#if os(macOS)
-    public var weight: NSFont.Weight = .medium
-    public var design: NSFontDescriptor.SystemDesign = .rounded
-    #else
-    public var weight: UIFont.Weight = .medium
-    public var design: UIFontDescriptor.SystemDesign = .rounded
-    #endif
+    public var font: Font.Config
     public var lineBreakMode: NSLineBreakMode = .byTruncatingMiddle
     public var alignment: NSTextAlignment = .left
 
     public static func largeDeviceStyle() -> Self {
-        self.init(font: Font.system(.title), size: 22)
+        self.init(font: .primaryActionText)
     }
 
-#if os(macOS)
-    public init(textColor: Color = .primary, font: Font, size: CGFloat, weight: NSFont.Weight = .medium, design: NSFontDescriptor.SystemDesign = .rounded, lineBreakMode: NSLineBreakMode = .byTruncatingMiddle, alignment: NSTextAlignment = .left) {
+    public init(textColor: Color = .primary, font: Font.Config, lineBreakMode: NSLineBreakMode = .byTruncatingMiddle, alignment: NSTextAlignment = .left) {
         self.textColor = textColor
         self.font = font
-        self.size = size
-        self.weight = weight
-        self.design = design
         self.lineBreakMode = lineBreakMode
         self.alignment = alignment
     }
-#else
-    public init(textColor: Color = .primary, font: Font, size: CGFloat, weight: UIFont.Weight = .medium, design: UIFontDescriptor.SystemDesign = .rounded, lineBreakMode: NSLineBreakMode = .byTruncatingMiddle, alignment: NSTextAlignment = .left) {
-        self.textColor = textColor
-        self.font = font
-        self.size = size
-        self.weight = weight
-        self.design = design
-        self.lineBreakMode = lineBreakMode
-        self.alignment = alignment
-    }
-#endif
 }
 
-// MARK: - Components
-
 #if os(macOS)
+/// SwiftUI wrapper for a simple text field that resigns upon exterior click or keyboard shortcuts
+///
 public struct SingleLineTextField: NSViewControllerRepresentable {
 
     public var initialText: String
@@ -110,8 +81,7 @@ public struct SingleLineTextField: NSViewControllerRepresentable {
         let vc = SingleLineTextFieldVC(
             initialText: initialText,
             placeholder: placeholderText,
-            font: .systemFont(ofSize: config.size, weight: config.weight),
-            size: config.size,
+            font: config.font.getFont(overrideFace: context.environment.fontFace, scaledSize: config.font.size),
             alignment: config.alignment
         )
         vc.field.textColor = NSColor(config.textColor)
@@ -121,24 +91,20 @@ public struct SingleLineTextField: NSViewControllerRepresentable {
         return vc
     }
 
-    public func updateNSViewController(_ vc: SingleLineTextFieldVC,
-                                context: Context) {
+    public func updateNSViewController(_ vc: SingleLineTextFieldVC, context: Context) {
         vc.field.string = initialText
         vc.field.textColor = NSColor(config.textColor)
-        vc.field.font = .systemFont(ofSize: config.size, weight: config.weight)
+        vc.field.font = config.font.getFont(overrideFace: context.environment.fontFace, scaledSize: config.font.size)
         switch config.alignment {
-            case .left:
-                vc.field.alignLeft(nil)
-
-            case .right:
-                vc.field.alignRight(nil)
-
-            default:
-                vc.field.alignCenter(nil)
+            case .left: vc.field.alignLeft(nil)
+            case .right: vc.field.alignRight(nil)
+            default: vc.field.alignCenter(nil)
         }
     }
 }
 
+/// Simple text field that resigns upon exterior click or keyboard shortcuts
+///
 public final class SingleLineTextFieldVC: NSViewController {
 
     var initialText: String
@@ -154,7 +120,6 @@ public final class SingleLineTextFieldVC: NSViewController {
     init(initialText: String,
          placeholder: String,
          font: NSFont,
-         size: CGFloat,
          alignment: NSTextAlignment) {
         self.initialText = initialText
         self.font = font
@@ -255,6 +220,10 @@ extension SingleLineTextFieldVC: NSTextViewDelegate {
     }
 }
 
+// MARK: - Styled NSTextView
+
+/// Rounded and colored styled text editor caret
+///
 class CustomCaretTextView: NSTextView {
 
     // MARK: - Caret Width

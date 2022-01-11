@@ -6,7 +6,7 @@ public struct CrossPlatformMenu<L: Listable>: View {
 
     public init(selected: Binding<L>,
                 options: [L],
-                labelFont: Font? = nil) {
+                labelFont: Font.Config? = nil) {
         _selected = selected
         self.options = options
         self.labelFont = labelFont
@@ -14,7 +14,7 @@ public struct CrossPlatformMenu<L: Listable>: View {
 
     @Binding public var selected: L
     public let options: [L]
-    public var labelFont: Font? = nil
+    public var labelFont: Font.Config? = nil
 
     public var body: some View {
         menu
@@ -27,18 +27,7 @@ public struct CrossPlatformMenu<L: Listable>: View {
             }
         } label: {
             Text(selected.label)
-                .font(labelFont)
+                .adaptiveFont(labelFont)
         }
-    }
-
-    private var picker: some View {
-        Picker(selection: $selected) {
-            ForEach(options) { option in
-                Text(option.label).id(option).tag(option)
-            }
-        } label: {
-            Text("")
-        }
-        .pickerStyle(.menu)
     }
 }

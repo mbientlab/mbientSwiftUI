@@ -6,7 +6,7 @@ public struct CrossPlatformStylizedMenu<L: Listable>: View {
 
     public init(selected: Binding<L>,
                 options: [L],
-                labelFont: Font? = nil,
+                labelFont: Font.Config? = nil,
                 labelColor: Color,
                 staticLabel: String? = nil) {
         _selected = selected
@@ -18,7 +18,7 @@ public struct CrossPlatformStylizedMenu<L: Listable>: View {
 
     @Binding public var selected: L
     public let options: [L]
-    public var labelFont: Font? = nil
+    public var labelFont: Font.Config? = nil
     public var labelColor: Color
     public var staticLabel: String?
 
@@ -41,14 +41,14 @@ public struct CrossPlatformStylizedMenu<L: Listable>: View {
         } label: {
             Text(staticLabel ?? selected.label)
                 .foregroundColor(labelColor)
-                .font(labelFont)
+                .font(.adaptiveFace(notScaled: labelFont))
                 .accessibilityLabel(selected.label)
         }
     }
 
     private var tickMark: some View {
         Text("􀆈")
-            .font(labelFont)
+            .adaptiveFont(labelFont)
             .scaleEffect(0.7)
             .foregroundColor(labelColor)
             .accessibilityHidden(true)
