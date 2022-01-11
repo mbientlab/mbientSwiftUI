@@ -131,7 +131,43 @@ public func getNameInputModally(
         }
     }
 #else
-    fatalError()
+    let alert = UIAlertController(
+        title: title,
+        message: message,
+        preferredStyle: .alert
+    )
+
+    alert.addTextField { textField in
+        textField.placeholder = prefilledText
+    }
+
+    if let secondaryLabel = secondaryLabel {
+        let secondaryButton = UIAlertAction(
+            title: secondaryLabel,
+            style: secondaryIsDestructive ? .destructive : .default,
+            handler: { _ in secondary(prefilledText) }
+        )
+        alert.addAction(secondaryButton)
+    }
+
+    let primaryButton = UIAlertAction(
+        title: primaryLabel,
+        style: primaryIsDestructive ? .destructive : .default,
+        handler: { [weak alert] _ in
+            guard let input = alert?.textFields?.first?.text else {
+                secondary(prefilledText)
+                return
+            }
+            primary(input)
+        }
+    )
+    alert.addAction(primaryButton)
+
+    guard let vc = UIApplication.shared.getActiveController() else {
+        secondary(prefilledText)
+        return
+    }
+    vc.present(alert, animated: true, completion: nil)
 #endif
 }
 
