@@ -46,10 +46,10 @@ public extension Font.Config {
 
     static let estimates         = Font.Config(peg: idiom == .iPhone ? .caption : .body)
 
-    static let actionDeviceTitle = Font.Config(peg: .title2)
-    static let actionStateLabel  = Font.Config(peg: .title3, weight: .medium)
-    static let actionStateDetail = Font.Config(peg: .subheadline)
-    static let actionIcon        = Font.Config(peg: .title, weight: .semibold)
+    static let actionDeviceTitle = Font.Config(peg: idiom == .iPhone ? .headline : .title2)
+    static let actionStateLabel  = Font.Config(peg: idiom == .iPhone ? .subheadline : .title3, weight: .medium)
+    static let actionStateDetail = Font.Config(peg: idiom == .iPhone ? .caption : .subheadline)
+    static let actionIcon        = Font.Config(peg: idiom == .iPhone ? .headline : .title, weight: .semibold)
 
 #if os(macOS)
     static let configureTileTitle = Font.Config(peg: idiom.is_Mac ? .title2 : .title3, weight: .medium)
