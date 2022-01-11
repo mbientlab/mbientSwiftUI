@@ -21,10 +21,15 @@ struct MatchedGeometryColorView: ViewModifier {
             content
                 .background(
                     color
-                        .ignoresSafeArea()
-                        .matchedGeometryEffect(id: color, in: namespace!)
+                        .edgesIgnoringSafeArea(.all)
+                        .matchedGeometryEffect(
+                            id: color,
+                            in: namespace!,
+                            properties: .size,
+                            anchor: .center,
+                            isSource: true
+                        )
                 )
-
         }
     }
 }

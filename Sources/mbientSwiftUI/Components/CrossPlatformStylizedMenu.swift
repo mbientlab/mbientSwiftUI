@@ -1,12 +1,12 @@
 // Copyright 2021 MbientLab Inc. All rights reserved. See LICENSE.MD.
 
-import mbientSwiftUI
+import SwiftUI
 
 public struct CrossPlatformStylizedMenu<L: Listable>: View {
 
     public init(selected: Binding<L>,
                 options: [L],
-                labelFont: Font? = nil,
+                labelFont: Font.Config? = nil,
                 labelColor: Color,
                 staticLabel: String? = nil) {
         _selected = selected
@@ -18,12 +18,19 @@ public struct CrossPlatformStylizedMenu<L: Listable>: View {
 
     @Binding public var selected: L
     public let options: [L]
-    public var labelFont: Font? = nil
+    public var labelFont: Font.Config? = nil
     public var labelColor: Color
     public var staticLabel: String?
 
     public var body: some View {
         menu
+#if os(macOS)
+        .alignmentGuide(HorizontalAlignment.center) { $0[HorizontalAlignment.center] + 5 }
+        .menuStyle(BorderlessButtonMenuStyle(showsMenuIndicator: false))
+        .background(tickMark.alignmentGuide(.trailing) { $0[.leading] + 3 }, alignment: .trailing)
+#else
+        .menuStyle(.borderlessButton)
+#endif
     }
 
     private var menu: some View {
@@ -34,32 +41,16 @@ public struct CrossPlatformStylizedMenu<L: Listable>: View {
         } label: {
             Text(staticLabel ?? selected.label)
                 .foregroundColor(labelColor)
-                .font(labelFont)
+                .font(.adaptiveFace(notScaled: labelFont))
                 .accessibilityLabel(selected.label)
         }
-#if os(macOS)
-        .menuStyle(BorderlessButtonMenuStyle(showsMenuIndicator: false))
-#endif
-        .alignmentGuide(HorizontalAlignment.center) { $0[HorizontalAlignment.center] + 5 }
-        .background(tickMark.alignmentGuide(.trailing) { $0[.leading] + 3 }, alignment: .trailing)
     }
 
     private var tickMark: some View {
         Text("􀆈")
-            .font(labelFont)
+            .adaptiveFont(labelFont)
             .scaleEffect(0.7)
             .foregroundColor(labelColor)
             .accessibilityHidden(true)
-    }
-
-    private var picker: some View {
-        Picker(selection: $selected) {
-            ForEach(options) { option in
-                Text(option.label).id(option).tag(option)
-            }
-        } label: {
-            Text("")
-        }
-        .pickerStyle(.menu)
     }
 }

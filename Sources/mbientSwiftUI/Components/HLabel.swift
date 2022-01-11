@@ -41,12 +41,12 @@ public struct HLabel<Content: View>: View {
         HStack(alignment: .firstTextBaseline, spacing: spacing) {
             Text(subtitle)
                 .foregroundColor(secondaryColor)
-                .font(.subheadline)
+                .adaptiveFont(.hLabelSubheadline)
                 .reportMaxWidth(to: SubtitleWK.self)
                 .frame(minWidth: subtitleWidth, alignment: .topLeading)
 
             view()
-                .font(.body.bold().monospacedDigit())
+                .adaptiveFont(.hLabelBody)
         }
     }
 }
