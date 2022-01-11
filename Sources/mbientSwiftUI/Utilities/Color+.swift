@@ -8,6 +8,7 @@ public extension Color {
     static let myBackground = Color("background")
     static let myGroupBackground = Color("groupBackground")
     static let myGroupBackground2 = Color("groupBackground2")
+    static let myGroupBackground3 = Color("groupBackground3")
     static let myPrimary = Color("primary")
     static let mySecondary = Color("secondary")
     static let myTertiary = Color("tertiary")
