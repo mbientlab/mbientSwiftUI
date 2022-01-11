@@ -33,8 +33,15 @@ public extension Font.Config {
     static let deviceCellTitle = Self.init(peg: idiom == .iPhone ? .title2 : .title, weight: .medium)
     static let deviceCellIcons = Self.init(peg: .headline)
 
-    static let sessionListName = Self.init(peg: idiom.is_Mac ? .title3 : .body)
-    static let sessionListDate = Self.init(peg: idiom.is_Mac ? .title3 : .subheadline)
+    #if os(macOS)
+    static let sessionListName = Self.init(peg: .title3)
+    static let sessionListDate = Self.init(peg: .title3)
+    #elseif os(iOS)
+    static let sessionListName = Self.init(peg: idiom == .iPhone ? .body : .headline)
+    static let sessionListDate = idiom == .iPhone
+    ? Self.init(peg:  .subheadline)
+    : Self.init(peg: .headline, weight: .regular)
+    #endif
     static let sessionListIcon = sessionListDate.withWeight(.medium)
 
     static let actionDeviceTitle = Self.init(peg: .title2)
@@ -42,9 +49,9 @@ public extension Font.Config {
     static let actionStateDetail = Self.init(peg: .subheadline)
     static let actionIcon = Self.init(peg: .title, weight: .semibold)
 
-    static let configureTileTitle = Self.init(peg: .title2, weight: .medium)
-    static let configureTileMenu = Self.init(peg: .title3, weight: .medium)
-    static let configurePresentsMenu = primaryActionText
+    static let configureTileTitle = Self.init(peg: idiom.is_Mac ? .title2 : .title3, weight: .medium)
+    static let configureTileMenu = Self.init(peg: idiom.is_Mac ? .title3 : .headline, weight: .medium)
+    static let configurePresentsMenu = idiom.is_Mac ? primaryActionText : configureTileTitle
 
     static let hLabelSubheadline = Self.init(peg: .subheadline)
     static let hLabelBody = Self.init(

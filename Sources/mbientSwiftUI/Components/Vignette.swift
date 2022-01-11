@@ -62,7 +62,7 @@ public struct DigitalVignette: View {
             let rowCount = Int(width / (fontSize + spacing)) + 1
             let glyphCount = Int(height / fontSize)
             let glyphs = makePattern(length: glyphCount)
-            let diameter = max(geo.size.height, geo.size.width)
+            let diameter = max(geo.size.height, geo.size.width) * (idiom == .iPad ? 1.12 : 1)
 
             MaskedZStack(diameter: diameter) {
                 background
