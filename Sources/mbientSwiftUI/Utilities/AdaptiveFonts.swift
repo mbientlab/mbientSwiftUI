@@ -75,7 +75,7 @@ public extension Font.Config {
 
     // MARK: - Onboarding
 
-    static let onboardingLargeTitle = Font.Config(peg: .largeTitle, weight: .medium)
+    static let onboardingLargeTitle = Font.Config(peg: .largeTitle, weight: .regular)
     static let onboardingHeadline = Font.Config(peg: .title)
     static let onboardingDescription = Font.Config(peg: .title2)
 }
