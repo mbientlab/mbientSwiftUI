@@ -39,7 +39,7 @@ public struct FocusFlipPanel<Focus:FlipPanelFocus, Up: View, Down: View, CTA: Vi
     private let hostWindowPrefix: String?
 
     public var body: some View {
-        VStack(alignment: .center, spacing: isAccessibilitySize || idiom == .iPhone ? 35 : 45) {
+        VStack(alignment: .center, spacing: isAccessibilitySize || idiom == .iPhone ? 15 : 45) {
 
             Text(vm.title)
                 .adaptiveFont(.onboardingLargeTitle)

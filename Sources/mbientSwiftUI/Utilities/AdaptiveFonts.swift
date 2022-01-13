@@ -52,7 +52,7 @@ public extension Font.Config {
     // MARK: - Onboarding
 
     static let onboardingLargeTitle   = Font.Config.mac(.largeTitle, iPad: .title,  iPhone: .title)
-    static let onboardingHeadline     = Font.Config.mac(.title,      iPad: .title2, iPhone: .title3)
+    static let onboardingHeadline     = Font.Config.mac(.title,      iPad: .title2, iPhone: .headline).iPhone(weight: .medium)
     static let onboardingDescription  = Font.Config.mac(.title2,     iPad: .title3, iPhone: .callout)
 }
 
@@ -138,5 +138,13 @@ fileprivate extension Font.Config {
     func iOS(size: Font.TextStyle, weight: Font.Weight? = nil) -> Self {
         guard idiom.is_iOS else { return self }
         return .init(face: face, size: size.guidelineSize, relativeTo: size, weight: weight ?? self.weight, design: design, options: options)
+    }
+
+    func iPhone(weight: Font.Weight) -> Self {
+        #if os(iOS)
+        idiom.is_iPhone ? self.withWeight(weight) : self
+        #else
+        return self
+        #endif
     }
 }
