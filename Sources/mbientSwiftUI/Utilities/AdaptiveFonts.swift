@@ -40,7 +40,6 @@ public extension Font.Config {
     static let ctaMajor               = Font.Config(.title2, weight: .medium)    .iPhone(.title3)
     static let ctaMinor               = Font.Config(.title3, weight: .medium)    .iPhone(.headline)
     static let ctaAlert               = ctaMinor
-    static let primaryActionText      = Font.Config(.title)
 
     static let hLabelSubheadline      = Font.Config(.subheadline)
     static let hLabelBody             = Font.Config(size: Font.TextStyle.callout.guidelineSize,
