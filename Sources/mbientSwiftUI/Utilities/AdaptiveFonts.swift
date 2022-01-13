@@ -75,9 +75,15 @@ public extension Font.Config {
 
     // MARK: - Onboarding
 
-    static let onboardingLargeTitle = Font.Config(peg: idiom.is_Mac ? .largeTitle : .title, weight: .regular)
-    static let onboardingHeadline = Font.Config(peg: idiom.is_Mac ? .title : .title2)
-    static let onboardingDescription = Font.Config(peg: idiom.is_Mac ? .title2 : .title3)
+#if os(macOS)
+    static let onboardingLargeTitle = Font.Config(peg: .largeTitle, weight: .regular)
+    static let onboardingHeadline = Font.Config(peg: .title)
+    static let onboardingDescription = Font.Config(peg: .title2)
+#elseif os(iOS)
+    static let onboardingLargeTitle = Font.Config(peg: .title)
+    static let onboardingHeadline = Font.Config(peg: idiom == .iPhone ? .title3 : .title2)
+    static let onboardingDescription = Font.Config(peg: idiom == .iPhone ? .callout : .title3)
+#endif
 }
 
 // MARK: - System

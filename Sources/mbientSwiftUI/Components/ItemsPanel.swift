@@ -15,18 +15,20 @@ public struct ItemsPanel: View {
     private var items: [Item]
     private var useSmallerSizes: Bool = false
     private var maxWidth: CGFloat
+    @State private var iconWidth = CGFloat(25)
 
     public var body: some View {
-        VStack(alignment: .center, spacing: 45) {
+        VStack(alignment: .center, spacing: idiom == .iPhone ? 35 : 45) {
             ForEach(items) { item in
-                ItemBox(item: item, isMinorPanel: useSmallerSizes)
+                ItemBox(item: item, isMinorPanel: useSmallerSizes, iconWidth: iconWidth)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
-        .padding(40)
+        .padding(idiom == .iPhone ? 20 : 40)
+        .padding(.vertical, idiom == .iPhone ? 10 : 0)
         .background(PanelBG())
         .frame(maxWidth: maxWidth, alignment: .leading)
-        .scrollAtAccessibilitySize()
+        .onPreferenceChange(IconWK.self) { iconWidth = $0 }
     }
 }
 
@@ -49,21 +51,27 @@ public extension ItemsPanel {
 
     struct ItemBox: View {
 
-        public init(item: ItemsPanel.Item, isMinorPanel: Bool) {
+        public init(item: ItemsPanel.Item, isMinorPanel: Bool, iconWidth: CGFloat) {
             self.item = item
             self.isMinorPanel = isMinorPanel
+            self.iconWidth = iconWidth
         }
 
         private let item: Item
         private let isMinorPanel: Bool
         private let spacing: CGFloat = 15
+        private let iconWidth: CGFloat
 
         public var body: some View {
             VStack(alignment: .leading, spacing: spacing) {
                 HStack(alignment: .center, spacing: spacing) {
                     symbol
+                        .frame(minWidth: iconWidth)
 
                     Text(item.headline)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.leading)
                         .adaptiveFont(.onboardingHeadline.adjustingSize(steps: isMinorPanel ? -1 : 0))
                 }
                 .foregroundColor(item.color)
@@ -75,6 +83,7 @@ public extension ItemsPanel {
                         .adaptiveFont(.onboardingDescription.adjustingSize(steps: isMinorPanel ? -1 : 0))
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
                         .foregroundColor(.mySecondary)
                         .lineSpacing(5)
                 }
@@ -84,6 +93,7 @@ public extension ItemsPanel {
         private var symbol: some View {
             item.symbol.image()
                 .adaptiveFont(.onboardingHeadline.withWeight(.semibold).adjustingSize(steps: isMinorPanel ? -1 : 0))
+                .reportMaxWidth(to: IconWK.self)
         }
     }
 
@@ -127,4 +137,8 @@ public extension ItemsPanel {
                 .foregroundColor(.myTertiary.opacity(0.15))
         }
     }
+}
+
+fileprivate struct IconWK: MaxWidthKey {
+    static var defaultValue: CGFloat = 25
 }

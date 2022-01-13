@@ -1,6 +1,5 @@
 // Copyright 2022 MbientLab Inc. All rights reserved. See LICENSE.MD.
 
-import mbientSwiftUI
 import SwiftUI
 
 public struct PeekingMetaWearBG: ViewModifier {

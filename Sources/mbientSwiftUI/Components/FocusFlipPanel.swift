@@ -10,9 +10,9 @@ public struct FocusFlipPanel<Focus:FlipPanelFocus, Up: View, Down: View, CTA: Vi
     public init(vm: FocusPanelVM<Focus>,
                 centerColumnNominalWidth: CGFloat = 450,
                 macOSHostWindowPrefix: String? = nil,
-                up: @escaping (_ maxWidth: CGFloat) -> Up,
-                down: @escaping (_ maxWidth: CGFloat) -> Down,
-                cta: @escaping () -> CTA
+                @ViewBuilder up: @escaping (_ maxWidth: CGFloat) -> Up,
+                @ViewBuilder down: @escaping (_ maxWidth: CGFloat) -> Down,
+                @ViewBuilder cta: @escaping () -> CTA
     ) {
         self.vm = vm
         self.nominalWidth = centerColumnNominalWidth
@@ -36,24 +36,31 @@ public struct FocusFlipPanel<Focus:FlipPanelFocus, Up: View, Down: View, CTA: Vi
     private let hostWindowPrefix: String?
 
     public var body: some View {
-        VStack(alignment: .center, spacing: isAccessibilitySize ? 20 : 45) {
+        VStack(alignment: .center, spacing: isAccessibilitySize || idiom == .iPhone ? 35 : 45) {
 
             Text(vm.title)
                 .adaptiveFont(.onboardingLargeTitle)
                 .padding(.bottom, isAccessibilitySize ? 20 : 0)
+                .padding(.bottom, idiom == .iPhone ? 10 : 0)
 
-            FlipView(up: up(centerColumnWidth),
-                     down: down(centerColumnWidth),
-                     showFaceUp: vm.showPrimaryPane)
-                .modifier(PeekingMetaWearBG())
+            if idiom == .iPhone { flip }
+            else { flip.modifier(PeekingMetaWearBG()) }
 
             cta()
                 .frame(maxWidth: centerColumnWidth, alignment: .center)
         }
-        .padding(.bottom, 45)
+        .padding(.bottom, idiom == .iPhone ? 20 : 45)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .backgroundToEdges(.defaultSystemBackground)
         .onReceive(vm.dismissPanel, perform: dismiss)
+    }
+
+    private var flip: some View {
+        FlipView(
+            up: up(centerColumnWidth),
+            down: down(centerColumnWidth),
+            showFaceUp: vm.showPrimaryPane
+        )
     }
 
     private func dismiss() {
@@ -74,6 +81,9 @@ public struct FocusFlipPanel<Focus:FlipPanelFocus, Up: View, Down: View, CTA: Vi
 #endif
     }
 }
+
+// MARK: - Controller & Model
+
 /// Table of contents, so to speak
 ///
 public protocol FlipPanelFocus: Identifiable {
