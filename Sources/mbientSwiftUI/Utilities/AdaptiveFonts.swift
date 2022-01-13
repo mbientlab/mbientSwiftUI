@@ -28,7 +28,7 @@ public extension Font.Config {
 
     static let configureSessionTitle  = Font.Config.mac(.title,  iPad: .title2,   iPhone:.title3)
     static let configureTileTitle     = Font.Config.mac(.title2, iPad: .title3,   iPhone:.headline,    weight: .medium)
-    static let configureTileMenu      = Font.Config.mac(.title3, iPad: .headline, iPhone:.subheadline, weight: .medium)
+    static let configureTileMenu      = Font.Config.mac(.title3, iPad: .headline, iPhone:.headline,    weight: .medium)
     static let estimates              = Font.Config(.body)                       .iPhone(.caption)
 
     static let actionDeviceTitle      = Font.Config(.title2)                     .iPhone(.headline)
