@@ -40,6 +40,7 @@ public struct FocusFlipPanel<Focus:FlipPanelFocus, Up: View, Down: View, CTA: Vi
 
             Text(vm.title)
                 .adaptiveFont(.onboardingLargeTitle)
+                .foregroundColor(.myPrimaryTinted)
                 .padding(.bottom, isAccessibilitySize ? 20 : 0)
                 .padding(.bottom, idiom == .iPhone ? 10 : 0)
 
