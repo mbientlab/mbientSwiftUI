@@ -6,16 +6,15 @@ public struct FlipView<Heads: View, Tails: View>: View {
 
     public init(up: Heads,
                 down: Tails,
-                showFaceUp: Binding<Bool>) {
+                showFaceUp: Bool) {
         self.up = up
         self.down = down
-        _showFaceUp = showFaceUp
+        self.showFaceUp = showFaceUp
     }
 
     var up: Heads
     var down: Tails
-
-    @Binding var showFaceUp: Bool
+    var showFaceUp: Bool
     @State private var isFaceUp = true
 
     public var body: some View {
