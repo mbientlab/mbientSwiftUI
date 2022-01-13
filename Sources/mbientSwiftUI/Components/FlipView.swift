@@ -25,8 +25,7 @@ public struct FlipView<Heads: View, Tails: View>: View {
             .degrees(showFaceUp ? 180 : 0),
             axis: (x: 0, y: 1, z: 0.0)
         )
-        .overlay(FlipReporter(isFaceUp: $isFaceUp,
-                              angle: showFaceUp ? 180 : 0))
+        .overlay(FlipReporter($isFaceUp, angle: showFaceUp ? 180 : 0))
         .animation(.easeInOut, value: showFaceUp)
     }
 
@@ -42,7 +41,7 @@ public struct FlipView<Heads: View, Tails: View>: View {
 
 public struct FlipReporter: Shape {
 
-    public init(isFaceUp: Binding<Bool>, angle: Double) {
+    public init(_ isFaceUp: Binding<Bool>, angle: Double) {
         self.angle = angle
         _isFaceUp = isFaceUp
     }

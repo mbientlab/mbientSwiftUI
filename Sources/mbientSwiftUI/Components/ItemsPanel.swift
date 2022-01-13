@@ -27,6 +27,7 @@ public struct ItemsPanel: View {
         .padding(idiom == .iPhone ? 20 : 40)
         .padding(.vertical, idiom == .iPhone ? 10 : 0)
         .background(PanelBG())
+        .padding(10)
         .frame(maxWidth: maxWidth, alignment: .leading)
         .onPreferenceChange(IconWK.self) { iconWidth = $0 }
     }
