@@ -63,9 +63,9 @@ public extension Font.Config {
 
     static let hLabelSubheadline = Font.Config(peg: .subheadline)
     static let hLabelBody = Font.Config(
-        size: Font.TextStyle.body.guidelineSize,
-        relativeTo: .body,
-        weight: .semibold,
+        size: Font.TextStyle.callout.guidelineSize,
+        relativeTo: .callout,
+        weight: .medium,
         design: .default,
         options: [.monospacedDigit])
 
