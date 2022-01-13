@@ -8,16 +8,18 @@ import SwiftUI
 public struct FocusFlipPanel<Focus:FlipPanelFocus, Up: View, Down: View, CTA: View>: View {
 
     public init(vm: FocusPanelVM<Focus>,
-         centerColumnNominalWidth: CGFloat = 450,
-         up: @escaping (_ maxWidth: CGFloat) -> Up,
-         down: @escaping (_ maxWidth: CGFloat) -> Down,
-         cta: @escaping () -> CTA
+                centerColumnNominalWidth: CGFloat = 450,
+                macOSHostWindowPrefix: String? = nil,
+                up: @escaping (_ maxWidth: CGFloat) -> Up,
+                down: @escaping (_ maxWidth: CGFloat) -> Down,
+                cta: @escaping () -> CTA
     ) {
         self.vm = vm
         self.nominalWidth = centerColumnNominalWidth
         self.up = up
         self.down = down
         self.cta = cta
+        self.hostWindowPrefix = macOSHostWindowPrefix
     }
 
     @ObservedObject private var vm: FocusPanelVM<Focus>
@@ -31,6 +33,7 @@ public struct FocusFlipPanel<Focus:FlipPanelFocus, Up: View, Down: View, CTA: Vi
     private var up: (CGFloat) -> Up
     private var down: (CGFloat) -> Down
     private var cta: () -> CTA
+    private let hostWindowPrefix: String?
 
     public var body: some View {
         VStack(alignment: .center, spacing: isAccessibilitySize ? 20 : 45) {
@@ -50,19 +53,27 @@ public struct FocusFlipPanel<Focus:FlipPanelFocus, Up: View, Down: View, CTA: Vi
         .padding(.bottom, 45)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .backgroundToEdges(.defaultSystemBackground)
-        .onReceive(vm.dismissPanel) {
-            presentationMode.wrappedValue.dismiss()
-#if os(macOS)
-            NSAnimationContext.runAnimationGroup({ context in
-                context.duration = 0.25
-                guard let key = NSApp.keyWindow else { return  }
-                key.animator().alphaValue = 0
-            }) { NSApp.keyWindow?.close() }
+        .onReceive(vm.dismissPanel, perform: dismiss)
+    }
+
+    private func dismiss() {
+#if os(iOS)
+        presentationMode.wrappedValue.dismiss()
+#elseif os(macOS)
+        guard let hostWindowPrefix = hostWindowPrefix,
+              let target = NSApp.windows
+                .filter ({ $0.identifier?.rawValue.hasPrefix(hostWindowPrefix) == true })
+                .sorted(by: { lhs, rhs in lhs.isKeyWindow })
+                .first
+        else { presentationMode.wrappedValue.dismiss(); return }
+
+        NSAnimationContext.runAnimationGroup({ context in
+            context.duration = 0.25
+            target.animator().alphaValue = 0
+        }) { target.close() }
 #endif
-        }
     }
 }
-
 /// Table of contents, so to speak
 ///
 public protocol FlipPanelFocus: Identifiable {
@@ -98,5 +109,9 @@ open class FocusPanelVM<Focus:FlipPanelFocus>: ObservableObject {
 
     public func previous() {
         setFocus(focus.previous())
+    }
+
+    public func setShowPrimaryPane(_ newValue: Bool) {
+        showPrimaryPane = newValue
     }
 }
