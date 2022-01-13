@@ -11,13 +11,15 @@ public struct ScrollFadeMask: View {
     public init(edge: Edge,
                 enabled: Bool = true,
                 scrollBarInset: CGFloat = 8,
-                height: CGFloat = CGFloat(macOS: 25, iPad: 45, iOS: 45)
+                height: CGFloat = Self.defaultSize
     ) {
         self.edge = edge
         self.enabled = enabled
         self.scrollBarInset = scrollBarInset
         self.height = height
     }
+
+    public static var defaultSize = CGFloat(macOS: 25, iPad: 45, iOS: 45)
     private let height: CGFloat
     private let scrollBarInset: CGFloat
     private let enabled: Bool
