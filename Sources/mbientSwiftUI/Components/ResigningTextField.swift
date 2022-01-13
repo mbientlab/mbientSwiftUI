@@ -38,7 +38,7 @@ public struct ResigningTextField: View {
 #elseif os(iOS)
     public var body: some View {
         TextField(placeholderText, text: $text) { _ in } onCommit: { onCommit(text) }
-        .adaptiveFont(.collectionSectionTitle)
+        .adaptiveFont(.configureSessionTitle)
         .onAppear { text = placeholderText }
     }
 #endif
@@ -54,7 +54,7 @@ public struct TextFieldConfig {
     public var alignment: NSTextAlignment = .left
 
     public static func largeDeviceStyle() -> Self {
-        self.init(font: .primaryActionText)
+        self.init(font: .configureSessionTitle)
     }
 
     public init(textColor: Color = .primary, font: Font.Config, lineBreakMode: NSLineBreakMode = .byTruncatingMiddle, alignment: NSTextAlignment = .left) {
