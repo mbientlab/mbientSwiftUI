@@ -7,9 +7,9 @@ public extension Font.Config {
     // MARK: - Headers
 
     static let screenHeader           = Font.Config(.largeTitle)                  .iPhone(.title3, weight: .medium)
-    static let screenSubsectionTitle  = Font.Config(.title2, weight: .medium)     .iPhone(.headline)
-    static let screenHeaderDetail     = screenHeader.adjustingSize(steps: .idiom == .iPhone ? -3 : -2)
     static let screenHeaderBackIcon   = Font.Config(.title2)                      .iPhone(.subheadline)
+    static let screenSubsectionTitle  = Font.Config(.title2, weight: .medium)     .iPhone(.headline)
+    static let screenHeaderDetail     = screenHeader.adjustingSize(steps: idiom.is_iPhone ? -3 : -2)
 
     static let collectionSectionTitle = Font.Config(.title2, weight: .medium, design: .rounded)
     static let subsectionTitle        = Font.Config(.title3, weight: .medium)

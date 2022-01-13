@@ -31,9 +31,10 @@ public enum DeviceIdiom: Int, Equatable, Comparable {
     }
     #endif
 
-    public var is_iOS: Bool { self != .macOS }
-
     public var is_Mac: Bool { self == .macOS }
+    public var is_iOS: Bool { self != .macOS }
+    public var is_iPhone: Bool { self == .iPhone }
+    public var is_iPad: Bool { self == .iPad }
 
     public static func < (lhs: DeviceIdiom, rhs: DeviceIdiom) -> Bool {
         lhs.rawValue < rhs.rawValue
