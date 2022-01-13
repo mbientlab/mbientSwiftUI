@@ -10,6 +10,7 @@ public struct FocusFlipPanel<Focus:FlipPanelFocus, Up: View, Down: View, CTA: Vi
     public init(vm: FocusPanelVM<Focus>,
                 centerColumnNominalWidth: CGFloat = 450,
                 macOSHostWindowPrefix: String? = nil,
+                background: Color = .defaultSystemBackground,
                 @ViewBuilder up: @escaping (_ maxWidth: CGFloat) -> Up,
                 @ViewBuilder down: @escaping (_ maxWidth: CGFloat) -> Down,
                 @ViewBuilder cta: @escaping () -> CTA
@@ -19,6 +20,7 @@ public struct FocusFlipPanel<Focus:FlipPanelFocus, Up: View, Down: View, CTA: Vi
         self.up = up
         self.down = down
         self.cta = cta
+        self.background = background
         self.hostWindowPrefix = macOSHostWindowPrefix
     }
 
@@ -29,6 +31,7 @@ public struct FocusFlipPanel<Focus:FlipPanelFocus, Up: View, Down: View, CTA: Vi
     private var isAccessibilitySize: Bool { typeSize.isAccessibilityCategory }
     private var centerColumnWidth: CGFloat { isAccessibilitySize ? .infinity : nominalWidth }
     private let nominalWidth: CGFloat
+    private let background: Color
 
     private var up: (CGFloat) -> Up
     private var down: (CGFloat) -> Down
@@ -52,7 +55,7 @@ public struct FocusFlipPanel<Focus:FlipPanelFocus, Up: View, Down: View, CTA: Vi
         }
         .padding(.bottom, idiom == .iPhone ? 20 : 45)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .backgroundToEdges(.defaultSystemBackground)
+        .backgroundToEdges(background)
         .onReceive(vm.dismissPanel, perform: dismiss)
     }
 
