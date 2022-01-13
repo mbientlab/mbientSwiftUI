@@ -85,6 +85,13 @@ public extension Font.Config {
         .init(face: face, size: size, anchor: anchor, weight: adjusted ?? weight, design: design, options: options)
     }
 
+    /// Conditionally change font by idiom
+    ///
+    func resize(for device: DeviceIdiom, to anchor: Font.TextStyle, weight: Font.Weight? = nil) -> Self {
+        guard idiom == device else { return self }
+        return .init(face: face, size: anchor.guidelineSize, relativeTo: anchor, weight: weight ?? self.weight, design: design, options: options)
+    }
+
     /// Adjust size using its `anchor` `Font.TextStyle` and the Human Interface Guideline sizes as ladder steps, optionally changing its anchor to the new reference `Font.TextStyle`
     func adjustingSize(steps: Int, changeAnchor: Bool = false) -> Self {
         if steps == 0 { return self }
@@ -142,7 +149,7 @@ public extension Font.Config {
         self.options = options
     }
 
-    init(peg: Font.TextStyle,
+    init(_ peg: Font.TextStyle,
          weight: Font.Weight? = nil,
          design: Font.Design = .default,
          options: Set<Font.Options> = []) {
