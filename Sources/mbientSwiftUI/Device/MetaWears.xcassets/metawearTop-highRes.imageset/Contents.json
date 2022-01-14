@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "metawear-light.png",
+      "filename" : "metawear-light-1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,11 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "metawear-dark.png",
+      "filename" : "metawear-dark-1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "metawear-light-2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -27,10 +28,12 @@
           "value" : "dark"
         }
       ],
+      "filename" : "metawear-dark-2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "metawear-light-3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -41,6 +44,7 @@
           "value" : "dark"
         }
       ],
+      "filename" : "metawear-dark-3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

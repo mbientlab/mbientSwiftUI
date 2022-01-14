@@ -24,7 +24,7 @@ public struct MetaWearWithLED: View {
         model.image.image()
             .resizable()
             .aspectRatio(280/340, contentMode: .fit)
-            .brightness(isHovering || isDropping ? 0.06 : 0)
+            .brightness(isHovering || isDropping ? 0.03 : 0)
             .overlay(FlashingLEDShine(emulator: ledEmulator, diameter: ledDiameter)
                         .offset(x: width * 0.01, y: height * 0.22), alignment: .top)
             .frame(width: width, height: height, alignment: .bottom)

@@ -33,7 +33,11 @@ public struct PeekingMetaWearBG: ViewModifier {
         private let rotateEffectSize: CGFloat = idiom.is_Mac ? 11 : 5
 
         var body: some View {
-            MetaWearWithLED(width: size, height: size)
+            SharedImages.metawearTopHiRes.image()
+                .resizable()
+                .aspectRatio(280/340, contentMode: .fit)
+                .frame(width: size, height: size, alignment: .bottom)
+
                 .opacity(metaWearOpacity)
 
                 .whenHovered { isHovered = $0 }

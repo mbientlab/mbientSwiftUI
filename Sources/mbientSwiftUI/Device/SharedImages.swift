@@ -6,6 +6,7 @@ import MetaWear
 public enum SharedImages: String {
     case metawearSide = "metawearSide"
     case metawearTop = "metawearTop"
+    case metawearTopHiRes = "metawearTop-highRes"
 
     public var bundleName: String { rawValue }
 
