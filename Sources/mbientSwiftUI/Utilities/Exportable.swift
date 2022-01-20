@@ -3,17 +3,17 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-protocol ExporterVM: AnyObject {
+public protocol ExporterVM: AnyObject {
     associatedtype Export: Exportable
     var export: Export? { get }
     func dismissExportPopover()
 }
 
-protocol Exportable: Identifiable, FileDocument {
+public protocol Exportable: Identifiable, FileDocument {
     var name: String { get }
 }
 
-extension ExporterVM {
+public extension ExporterVM {
 
     func presentExporter(for id: Export.ID) -> Binding<Bool> {
         .init(
@@ -25,7 +25,7 @@ extension ExporterVM {
     }
 }
 
-extension View {
+public extension View {
 
     func exportDocument<VM: ExporterVM>(
         id: VM.Export.ID,
@@ -44,26 +44,26 @@ extension View {
 
 // MARK: - Conforming Types
 
-struct Folder: FileDocument, Exportable {
-    static var readableContentTypes = [UTType.folder]
-    let wrapper: FileWrapper
-    var id: UUID
-    var name: String
+public struct Folder: FileDocument, Exportable {
+    public static var readableContentTypes = [UTType.folder]
+    public let wrapper: FileWrapper
+    public var id: UUID
+    public var name: String
 
-    init(url: URL, id: UUID, name: String) throws {
+    public init(url: URL, id: UUID, name: String) throws {
         self.id = id
         self.name = name
         self.wrapper = try FileWrapper(url: url, options: [])
         guard wrapper.isDirectory else { throw CocoaError(.featureUnsupported) }
     }
 
-    init(configuration: ReadConfiguration) throws {
+    public init(configuration: ReadConfiguration) throws {
         self.wrapper = configuration.file
         self.id = .init()
-        self.name = ""
+        self.name = configuration.file.preferredFilename ?? "Untitled"
     }
 
-    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+    public func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         wrapper
     }
 }
