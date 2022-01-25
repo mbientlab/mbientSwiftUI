@@ -14,6 +14,7 @@ struct MatchedGeometryColorView: ViewModifier {
 
     struct Modified: View {
         @Environment(\.namespace) var namespace
+        @Namespace private var fallbackNamespace
         var content: Content
         var color: Color
 
@@ -24,7 +25,7 @@ struct MatchedGeometryColorView: ViewModifier {
                         .edgesIgnoringSafeArea(.all)
                         .matchedGeometryEffect(
                             id: color,
-                            in: namespace!,
+                            in: namespace ?? fallbackNamespace,
                             properties: .size,
                             anchor: .center,
                             isSource: true
