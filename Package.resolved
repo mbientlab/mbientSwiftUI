@@ -14,8 +14,8 @@
         "package": "MetaWear",
         "repositoryURL": "https://github.com/mbientlab/MetaWear-Swift-Combine-SDK",
         "state": {
-          "branch": "main",
-          "revision": "d0f9c19abfefd3ec8944e2b9c73da6a2d73e9d92",
+          "branch": "timestamp",
+          "revision": "94d16cad84812c36f1410dc33391e07918a8caba",
           "version": null
         }
       },

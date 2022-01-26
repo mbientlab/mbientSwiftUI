@@ -9,7 +9,7 @@ let package = Package(
     products: [
         .library(name: "mbientSwiftUI",targets: ["mbientSwiftUI"]),
     ],
-    dependencies: [.package(name: "MetaWear", url: "https://github.com/mbientlab/MetaWear-Swift-Combine-SDK", branch: "main")],
+    dependencies: [.package(name: "MetaWear", url: "https://github.com/mbientlab/MetaWear-Swift-Combine-SDK", branch: "timestamp")],
     targets: [
         .target(
             name: "mbientSwiftUI",
