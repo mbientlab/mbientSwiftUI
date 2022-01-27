@@ -6,13 +6,13 @@ import MetaWearSync
 
 public struct MetaWearWithLED: View {
 
-    public init(width: CGFloat, height: CGFloat, ledEmulator: MWLED.Flash.Pattern.Emulator = .init(preset: .zero)) {
+    public init(width: CGFloat, height: CGFloat, ledEmulator: MWLED.Flash.Emulator = .init(preset: .zero)) {
         self.width = width
         self.height = height
         self.ledEmulator = ledEmulator
     }
 
-    private var ledEmulator: MWLED.Flash.Pattern.Emulator = .init(preset: .zero)
+    private var ledEmulator: MWLED.Flash.Emulator = .init(preset: .zero)
     @Environment(\.isDimmed) private var isDimmed
     @Environment(\.isHovered) private var isHovering
     @Environment(\.isDropTarget) private var isDropping

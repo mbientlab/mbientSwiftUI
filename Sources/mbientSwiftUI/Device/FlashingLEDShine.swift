@@ -6,12 +6,12 @@ import MetaWearSync
 
 public struct FlashingLEDShine: View {
 
-    public init(emulator: MWLED.Flash.Pattern.Emulator, diameter: CGFloat) {
+    public init(emulator: MWLED.Flash.Emulator, diameter: CGFloat) {
         self.diameter = diameter
         self.ledEmulator = emulator
     }
 
-    @ObservedObject public var ledEmulator: MWLED.Flash.Pattern.Emulator
+    @ObservedObject public var ledEmulator: MWLED.Flash.Emulator
     public var diameter: CGFloat
 
     public var body: some View {
@@ -23,7 +23,7 @@ public struct FlashingLEDShine: View {
 
     private var dot: some View {
         Circle()
-            .foregroundColor(.init(ledEmulator.pattern.color))
+            .foregroundColor(.init(ledEmulator.color))
             .opacity(ledEmulator.ledIsOn ? 1 : 0)
             .animation(.linear(duration: 0.05), value: ledEmulator.ledIsOn)
             .frame(width: diameter, height: diameter)
