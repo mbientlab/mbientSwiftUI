@@ -73,7 +73,7 @@ public func alert(
 
 #if os(iOS)
 extension UIApplication {
-    func getActiveController() -> UIViewController? {
+    public func getActiveController() -> UIViewController? {
         let scene = UIApplication.shared.connectedScenes.first(where: \.isActive) as? UIWindowScene
         let window = scene?.windows.first(where: \.isKeyWindow)
         return window?.rootViewController?.getUppermostVC() ?? window?.rootViewController
@@ -81,7 +81,7 @@ extension UIApplication {
 }
 
 extension UIViewController {
-    func getUppermostVC() -> UIViewController? {
+    public func getUppermostVC() -> UIViewController? {
         if let nav = self as? UINavigationController {
             return nav.visibleViewController?.getUppermostVC()
         } else if let tab = (self as? UITabBarController)?.selectedViewController {
@@ -95,6 +95,6 @@ extension UIViewController {
 }
 
 extension UIScene {
-    var isActive: Bool { activationState == .foregroundActive }
+    public var isActive: Bool { activationState == .foregroundActive }
 }
 #endif
